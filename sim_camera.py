@@ -41,11 +41,10 @@ if __name__ == '__main__':
     rospy.init_node("teste", anonymous=True)
     cam1 = SimCamera(camera_name='camera1')
     cam1.start()
-    print(1)
     cam2 = SimCamera(camera_name='camera2')
     cam2.start()
-
-    print(2)
+    cam3 = SimCamera(camera_name='camera3')
+    cam3.start()
 
 
 

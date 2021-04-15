@@ -47,10 +47,12 @@ if __name__ == '__main__':
 
     print(2)
 
-    t1 = ArucoDetect(camera_name="/sim_ros_interface/camera1", image_name='image_raw', dictionary=9)
-    t2 = ArucoDetect(camera_name="/sim_ros_interface/camera2", image_name='image_raw', dictionary=9)
+    t1 = ArucoDetect(camera_name="/sim_ros_interface/camera1", image_name='image_raw', dictionary=7)
+    t2 = ArucoDetect(camera_name="/sim_ros_interface/camera2", image_name='image_raw', dictionary=7)
+    t3 = ArucoDetect(camera_name="/sim_ros_interface/camera3", image_name='image_raw', dictionary=7)
     t1.start()
     t2.start()
+    t3.start()
 
     print(3)
 

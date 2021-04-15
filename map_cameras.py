@@ -20,8 +20,6 @@ class MapCameras:
             realt = np.array([realt['x'],realt['y'],realt['z']])
             self.located_markers[fiducial]={'r':realq, 't':realt}
 
-
-
         self.measures = {}
         self.located_cameras = {}
         self.unlocated_cameras = []
@@ -31,10 +29,8 @@ class MapCameras:
 
 
     def measure(self, time):
-        print("iniciou")
         rospy.Subscriber("/tf", TFMessage, self.callback)
         rospy.sleep(time)
-        print("acabou")
 
     def callback(self, data):
         for transform in data.transforms:
@@ -45,7 +41,6 @@ class MapCameras:
 
     def compute(self):
         self.unlocated_cameras = list(self.measures)
-        print(self.unlocated_cameras)
 
         while len(self.unlocated_cameras)>0:
             n_unknown = len(self.unlocated_cameras)
@@ -67,23 +62,20 @@ class MapCameras:
 
                         self.unlocated_cameras.remove(camera)
 
-                        for fiducial in self.measures[camera].keys():
-                            if fiducial not in self.located_markers.keys():
-                                fiducialq = self.measures[camera][fiducial][0]['r']
-                                fiducialt = self.measures[camera][fiducial][0]['t']
-                                fiducialt = np.array([fiducialt.x,fiducialt.y,fiducialt.z])
-                                fiducialq = Quaternion(w=fiducialq.w,x=fiducialq.x,y=fiducialq.y,z=fiducialq.z)
+                        for aux_fid in self.measures[camera].keys():
+                            if aux_fid not in self.located_markers.keys():
+                                aux_fidq = self.measures[camera][aux_fid][0]['r']
+                                aux_fidt = self.measures[camera][aux_fid][0]['t']
+                                aux_fidt = np.array([aux_fidt.x,aux_fidt.y,aux_fidt.z])
+                                aux_fidq = Quaternion(w=aux_fidq.w,x=aux_fidq.x,y=aux_fidq.y,z=aux_fidq.z)
 
-                                realq = cameraq*fiducialq
-                                realt = cameraq.rotate(fiducialt)+camerat
-                                self.located_markers[fiducial]={'r':realq, 't':realq}
+                                realq = cameraq*aux_fidq
+                                realt = cameraq.rotate(aux_fidt)+camerat
+                                self.located_markers[aux_fid]={'r':realq, 't':realt}
 
-                        break
-            
             if len(self.unlocated_cameras)==n_unknown:
                 break
 
-        print(self.located_cameras)
 
                                 
 
@@ -92,7 +84,7 @@ class MapCameras:
 
 
 rospy.init_node('listener', anonymous=True)
-mp = MapCameras(['camera1', 'camera2'], [23], {'fiducial_23':{'t':{'x':0,'y':0,'z':0},'r':{'x':0,'y':0,'z':0,'w':1}}})
+mp = MapCameras(['camera1', 'camera2', 'camera3'], [23], {'fiducial_4':{'t':{'x':0,'y':1.3,'z':0},'r':{'x':0,'y':0,'z':0,'w':1}}})
 mp.measure(1)
 
 mp.compute()
