@@ -45,6 +45,21 @@ if __name__ == '__main__':
     cam2.start()
     cam3 = SimCamera(camera_name='camera3')
     cam3.start()
+    cam4 = SimCamera(camera_name='camera4')
+    cam4.start()
+    cam5 = SimCamera(camera_name='camera5')
+    cam5.start()
+    cam6 = SimCamera(camera_name='camera6')
+    cam6.start()
+    cam7 = SimCamera(camera_name='camera7')
+    cam7.start()
+    cam8 = SimCamera(camera_name='camera8')
+    cam8.start()
+    cam9 = SimCamera(camera_name='camera9')
+    cam9.start()
+    cam10 = SimCamera(camera_name='camera10')
+    cam10.start()
+
 
 
 
